@@ -18,12 +18,6 @@ class User {
   email: string
 
   @Column()
-  type: string
-
-  @Column('boolean')
-  isActive: boolean
-
-  @Column()
   password: string
 
   @CreateDateColumn()
