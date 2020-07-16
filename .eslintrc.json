@@ -21,6 +21,7 @@
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
     "semi": "off",
+    "camelcase": "off",
     "@typescript-eslint/interface-name-prefix": [
       "error",
       { "prefixWithI": "always" }
