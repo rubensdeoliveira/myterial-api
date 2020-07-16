@@ -3,6 +3,8 @@ import { compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 import authConfig from '../config/auth'
 
+import AppError from '../errors/AppError'
+
 import User from '../models/User'
 
 interface Request {
@@ -24,20 +26,20 @@ class AuthenticateUserService {
     })
 
     if (!user) {
-      throw new Error('Combinação de E-mail/Senha inválida.')
+      throw new AppError('Combinação de E-mail/Senha inválida.', 401)
     }
 
     const passwordMatched = await compare(password, user.password)
 
     if (!passwordMatched) {
-      throw new Error('Combinação de E-mail/Senha inválida.')
+      throw new AppError('Combinação de E-mail/Senha inválida.', 401)
     }
 
     const { secret, expiresIn } = authConfig.jwt
 
     const token = sign({}, secret, {
       subject: user.id,
-      expiresIn: expiresIn,
+      expiresIn,
     })
 
     return {
