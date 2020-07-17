@@ -3,6 +3,8 @@ import { getRepository, Repository } from 'typeorm'
 import IMaterialsRepository from '@modules/materials/repositories/IMaterialsRepository'
 
 import ICreateMaterialDTO from '@modules/materials/dtos/ICreateMaterialDTO'
+import IFindUserMaterialDTO from '@modules/materials/dtos/IFindUserMaterialDTO'
+
 import Material from '../entities/Material'
 
 class MaterialsRepository implements IMaterialsRepository {
@@ -10,6 +12,16 @@ class MaterialsRepository implements IMaterialsRepository {
 
   constructor() {
     this.ormRepository = getRepository(Material)
+  }
+
+  public async findUserMaterial(
+    data: IFindUserMaterialDTO,
+  ): Promise<Material | undefined> {
+    const material = this.ormRepository.findOne({
+      where: { user_id: data.user_id, id: data.material_id },
+    })
+
+    return material
   }
 
   public async findUserMaterials(user_id: string): Promise<Material[]> {

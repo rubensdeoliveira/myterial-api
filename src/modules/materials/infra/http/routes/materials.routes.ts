@@ -17,20 +17,21 @@ const userMaterialsController = new UserMaterialsController()
 
 materialsRouter.use(ensureAuthenticated)
 
+materialsRouter.get('/me/:id', userMaterialsController.show)
 materialsRouter.get('/me', userMaterialsController.index)
 
 materialsRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      code: Joi.string(),
+      code: Joi.string().allow(''),
       name: Joi.string().required(),
-      description: Joi.string(),
-      manufacturer: Joi.string(),
+      description: Joi.string().allow(''),
+      manufacturer: Joi.string().allow(''),
       amount: Joi.number().required(),
       price: Joi.number(),
       unity: Joi.string().required(),
-      note: Joi.string(),
+      note: Joi.string().allow(''),
     },
   }),
   materialsController.create,
