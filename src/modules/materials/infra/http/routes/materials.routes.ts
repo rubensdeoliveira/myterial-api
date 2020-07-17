@@ -6,14 +6,18 @@ import { celebrate, Segments, Joi } from 'celebrate'
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated'
 import MaterialsController from '../controllers/MaterialsController'
+import UserMaterialsController from '../controllers/UserMaterialsController'
 // import UserAvatarController from '../controllers/UserAvatarController'
 
 const materialsRouter = Router()
 const materialsController = new MaterialsController()
+const userMaterialsController = new UserMaterialsController()
 // const userAvatarController = new UserAvatarController()
 // const upload = multer(uploadConfig)
 
 materialsRouter.use(ensureAuthenticated)
+
+materialsRouter.get('/me', userMaterialsController.index)
 
 materialsRouter.post(
   '/',

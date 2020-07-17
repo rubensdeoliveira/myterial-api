@@ -12,6 +12,12 @@ class MaterialsRepository implements IMaterialsRepository {
     this.ormRepository = getRepository(Material)
   }
 
+  public async findUserMaterials(user_id: string): Promise<Material[]> {
+    const materials = this.ormRepository.find({ where: { user_id } })
+
+    return materials
+  }
+
   public async create(materialData: ICreateMaterialDTO): Promise<Material> {
     const material = this.ormRepository.create(materialData)
 
